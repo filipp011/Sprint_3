@@ -55,3 +55,76 @@ class OnlineSalesRegisterCollector:
             total *= 0.9
         
         return total
+    
+
+    # Рассчет НДС 20%
+    def twenty_percent_tax_calculation(self):
+        twenty_percent_tax = []
+        total = []
+
+        for item in self.__name_items:
+            if self.__tax_rate[item] == 20:
+                twenty_percent_tax.append(item)
+                total.append(self.__item_price[item])
+
+        # Рассчитываем общую сумму НДС
+        tax_total = sum(price * 0.2 for price in total)
+
+        # Если количество товаров больше 10, применяем скидку на общую сумму НДС
+        if len(self.__name_items) > 10:
+            tax_total *= 0.9
+        
+        return tax_total
+    
+
+    # Расчет НДС для товаров 10%
+    def ten_percent_tax_calculation(self):
+        ten_percent_tax = []
+        total = []
+
+        for item in self.__name_items:
+            if self.__tax_rate[item] == 10:
+                ten_percent_tax.append(item)
+                total.append(self.__item_price[item])
+
+        # Рассчитываем общую сумму НДС
+        tax_total = sum(price * 0.1 for price in total)
+
+        # Если количество товаров больше 10, применяем скидку на общую сумму НДС
+        if len(self.__name_items) > 10:
+            tax_total *= 0.9
+        
+        return tax_total
+    
+
+    # Расчет общей суммы налога
+    def total_tax(self):
+        total_twenty_percent_tax = self.twenty_percent_tax_calculation()
+        total_ten_percent_tax = self.ten_percent_tax_calculation()
+        
+        return total_twenty_percent_tax + total_ten_percent_tax
+    
+
+    # Вовзрат телефона 
+    @staticmethod
+    def get_telephone_number(telephone_number):
+        # Проверяем, является ли номер целым числом
+        if not isinstance(telephone_number, int):
+            raise ValueError('Необходимо ввести цифры')
+        
+        # Преобразуем номер в строку для дальнейшей проверки длины
+        telephone_str = str(telephone_number)
+
+        # Проверяем длину номера
+        if len(telephone_str) != 10:
+            raise ValueError('Необходимо ввести 10 цифр после "+7"')
+
+        # Возвращаем полный номер телефона с кодом страны +7
+        return f'+7{telephone_str}'
+    
+    telephone_number = 1234567890  # Пример корректного номера телефона
+    full_number = OnlineSalesRegisterCollector.get_telephone_number(telephone_number)
+
+# Выводим полный номер телефона
+print(full_number)  # Ожидаемый вывод: +71234567890
+    
