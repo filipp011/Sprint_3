@@ -122,9 +122,37 @@ class OnlineSalesRegisterCollector:
         # Возвращаем полный номер телефона с кодом страны +7
         return f'+7{telephone_str}'
     
-    telephone_number = 1234567890  # Пример корректного номера телефона
-    full_number = OnlineSalesRegisterCollector.get_telephone_number(telephone_number)
-
-# Выводим полный номер телефона
-print(full_number)  # Ожидаемый вывод: +71234567890
+        # Метод для получения текущей даты и времени
+    @staticmethod
+    def get_date_and_time():
+        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
+    # Создаем экземпляр класса
+new_cheque = OnlineSalesRegisterCollector()
+    
+new_cheque.add_item_to_cheque('чипсы')
+new_cheque.add_item_to_cheque('кола')
+new_cheque.add_item_to_cheque('печенье')
+new_cheque.add_item_to_cheque('молоко')
+new_cheque.add_item_to_cheque('кефир')
+
+# Проверяем состояние чека
+print("Товары в чеке:", new_cheque.name_items)
+print("Количество товаров:", new_cheque.number_items)
+
+# Проверяем общую стоимость и налоги
+print("Общая стоимость товаров:", new_cheque.check_amount())
+print("НДС для товаров с налогом 10%:", new_cheque.ten_percent_tax_calculation())
+print("НДС для товаров с налогом 20%:", new_cheque.twenty_percent_tax_calculation())
+print("Общий налог:", new_cheque.total_tax())
+
+# Проверка телефонного номера без обработки исключений
+print("Полный номер телефона:", new_cheque.get_telephone_number(1234567890))
+
+# Получаем текущую дату и время
+print("Текущая дата и время:", new_cheque.get_date_and_time())
+
+# Удаляем товар из чека и проверяем состояние снова
+new_cheque.delete_item_from_check('чипсы')
+print("Товары в чеке после удаления:", new_cheque.name_items)
+print("Количество товаров после удаления:", new_cheque.number_items)
